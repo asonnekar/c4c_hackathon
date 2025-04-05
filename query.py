@@ -72,7 +72,7 @@ def calculate_class_topics(student_progress, topics):
     
     return weakest_topic, strongest_topic
 
-if __name__ == "__main__":
+def main():
     student_progress = fetch_student_topic_progress()
     topics = fetch_topics()
     top = []
@@ -80,12 +80,22 @@ if __name__ == "__main__":
         top.append(t['topic_name'])
     weakest_topic, strongest_topic = calculate_class_topics(student_progress, topics)
     
-    print("\n=== Weakest Topic by Class ===")
-    print(f"Topic: {weakest_topic[1]['topic_name']} (ID: {weakest_topic[0]})")
-    print(f"Average Ease Factor: {weakest_topic[1]['average_ease']:.2f}\n")
+    # Get video links from agent
+    video_links = agent(top)
     
-    print("=== Strongest Topic by Class ===")
-    print(f"Topic: {strongest_topic[1]['topic_name']} (ID: {strongest_topic[0]})")
-    print(f"Average Ease Factor: {strongest_topic[1]['average_ease']:.2f}\n")
+    # Return results as a dictionary
+    return {
+        "weakest_topic": {
+            "name": weakest_topic[1]['topic_name'],
+            "average_ease": round(weakest_topic[1]['average_ease'], 2)
+        },
+        "strongest_topic": {
+            "name": strongest_topic[1]['topic_name'],
+            "average_ease": round(strongest_topic[1]['average_ease'], 2)
+        },
+        "video_links": video_links
+    }
 
-    agent(top)
+if __name__ == "__main__":
+    res = main()
+    print(res)
