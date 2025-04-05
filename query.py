@@ -2,9 +2,26 @@ from supabase import create_client
 from collections import defaultdict
 from dotenv import load_dotenv
 import os
-import agent
+from smolagents import CodeAgent, DuckDuckGoSearchTool, HfApiModel
 
 load_dotenv()
+
+api_key = os.getenv("HF_API_KEY")
+
+
+"""
+Returns a list of urls that are relevant to the query topic
+"""
+def agent(topics):
+
+    search_tool = DuckDuckGoSearchTool()
+    model = HfApiModel(model_id="Qwen/Qwen2.5-Coder-32B-Instruct", token=api_key)
+    agent = CodeAgent(tools=[search_tool], model=model)
+    result = agent.run(f"for each given DSA topic {topics}, search for a video related to the topic and return links. Do not return links for playlists")
+    return result
+
+
+
 
 SUPABASE_URL = 'https://oahnqpqpsqmmlwxumhpa.supabase.co'
 supabase_key = os.getenv("SUPABASE_KEY")
@@ -70,5 +87,5 @@ if __name__ == "__main__":
     print("=== Strongest Topic by Class ===")
     print(f"Topic: {strongest_topic[1]['topic_name']} (ID: {strongest_topic[0]})")
     print(f"Average Ease Factor: {strongest_topic[1]['average_ease']:.2f}\n")
-    print(top)
-    agent.agent(top)
+
+    agent(top)
