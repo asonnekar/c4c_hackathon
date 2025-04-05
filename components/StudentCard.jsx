@@ -5,9 +5,9 @@ import { TopicProficiencyCard } from "./ProficiencyBar";
  * StudentCard component to display a student with topic proficiency
  *
  * @param {Object} props
- * @param {Object} props.student - Student object with id, name, email
- * @param {Array} props.topics - Array of topic objects
- * @param {Array} props.progress - Array of progress objects for the student
+ * @param {Object} props.student - Student object with id, name, email from Supabase
+ * @param {Array} props.topics - Array of topic objects from Supabase
+ * @param {Array} props.progress - Array of progress objects for the student from Supabase
  * @returns {JSX.Element}
  */
 export default function StudentCard({ student, topics, progress }) {
@@ -25,13 +25,15 @@ export default function StudentCard({ student, topics, progress }) {
         <div className="space-y-3">
           {topics.map((topic) => {
             // Find this student's progress for this topic
-            const topicProgress = progress.find((p) => p.topic_id === topic.id);
+            const topicProgress = progress.find(
+              (p) => p.topic_id === topic.topic_id
+            );
             const easeFactor = topicProgress ? topicProgress.ease_factor : 2.5; // Default if no data
 
             return (
               <TopicProficiencyCard
-                key={topic.id}
-                topicName={topic.name}
+                key={topic.topic_id}
+                topicName={topic.topic_name}
                 easeFactor={easeFactor}
               />
             );

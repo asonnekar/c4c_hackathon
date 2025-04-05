@@ -6,7 +6,7 @@ import { useState } from "react";
  * Question component for displaying and answering DSA questions
  *
  * @param {Object} props
- * @param {Object} props.question - The question data
+ * @param {Object} props.question - The question data from Supabase
  * @param {number} props.studentId - The ID of the student
  * @param {boolean} props.submitted - Whether all questions have been submitted
  * @param {function} props.onSelectOption - Callback when an option is selected
@@ -23,17 +23,17 @@ export default function Question({
     if (!submitted) {
       setSelectedOption(option);
       if (onSelectOption) {
-        onSelectOption(question.id, option);
+        onSelectOption(question.question_id, option);
       }
     }
   };
 
-  const isCorrect = submitted && selectedOption === question.correct_option;
+  const isCorrect = submitted && selectedOption === question.correct_choice;
 
   return (
     <div className="border rounded-lg p-6 mb-6 bg-white shadow-md">
       <div className="mb-4">
-        <h3 className="text-xl font-semibold">{question.question}</h3>
+        <h3 className="text-xl font-semibold">{question.question_text}</h3>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -51,7 +51,7 @@ export default function Question({
               : ""
           } ${
             submitted &&
-            question.correct_option === "A" &&
+            question.correct_choice === "A" &&
             selectedOption !== "A"
               ? "bg-green-100 border-green-500"
               : ""
@@ -67,7 +67,7 @@ export default function Question({
               } ${
                 submitted &&
                 ((selectedOption === "A" && isCorrect) ||
-                  question.correct_option === "A")
+                  question.correct_choice === "A")
                   ? "bg-green-500 text-white"
                   : ""
               } ${
@@ -78,7 +78,7 @@ export default function Question({
             >
               A
             </div>
-            <span>{question.option_a}</span>
+            <span>{question.choice_a}</span>
           </div>
         </button>
 
@@ -96,7 +96,7 @@ export default function Question({
               : ""
           } ${
             submitted &&
-            question.correct_option === "B" &&
+            question.correct_choice === "B" &&
             selectedOption !== "B"
               ? "bg-green-100 border-green-500"
               : ""
@@ -112,7 +112,7 @@ export default function Question({
               } ${
                 submitted &&
                 ((selectedOption === "B" && isCorrect) ||
-                  question.correct_option === "B")
+                  question.correct_choice === "B")
                   ? "bg-green-500 text-white"
                   : ""
               } ${
@@ -123,7 +123,7 @@ export default function Question({
             >
               B
             </div>
-            <span>{question.option_b}</span>
+            <span>{question.choice_b}</span>
           </div>
         </button>
 
@@ -141,7 +141,7 @@ export default function Question({
               : ""
           } ${
             submitted &&
-            question.correct_option === "C" &&
+            question.correct_choice === "C" &&
             selectedOption !== "C"
               ? "bg-green-100 border-green-500"
               : ""
@@ -157,7 +157,7 @@ export default function Question({
               } ${
                 submitted &&
                 ((selectedOption === "C" && isCorrect) ||
-                  question.correct_option === "C")
+                  question.correct_choice === "C")
                   ? "bg-green-500 text-white"
                   : ""
               } ${
@@ -168,7 +168,7 @@ export default function Question({
             >
               C
             </div>
-            <span>{question.option_c}</span>
+            <span>{question.choice_c}</span>
           </div>
         </button>
 
@@ -186,7 +186,7 @@ export default function Question({
               : ""
           } ${
             submitted &&
-            question.correct_option === "D" &&
+            question.correct_choice === "D" &&
             selectedOption !== "D"
               ? "bg-green-100 border-green-500"
               : ""
@@ -202,7 +202,7 @@ export default function Question({
               } ${
                 submitted &&
                 ((selectedOption === "D" && isCorrect) ||
-                  question.correct_option === "D")
+                  question.correct_choice === "D")
                   ? "bg-green-500 text-white"
                   : ""
               } ${
@@ -213,7 +213,7 @@ export default function Question({
             >
               D
             </div>
-            <span>{question.option_d}</span>
+            <span>{question.choice_d}</span>
           </div>
         </button>
       </div>
@@ -272,7 +272,7 @@ export default function Question({
             </p>
             {!isCorrect && (
               <p className="text-gray-700 mt-1">
-                The correct answer is {question.correct_option}.
+                The correct answer is {question.correct_choice}.
               </p>
             )}
           </div>
