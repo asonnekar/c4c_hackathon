@@ -10,6 +10,7 @@ import {
 } from "../../lib/data-service";
 import StudentCard from "../../components/StudentCard";
 import { ProficiencyLegend } from "../../components/ProficiencyBar";
+import TopicAnalyzer from "../../components/TopicAnalyzer";
 
 export default function TeacherPage() {
   const [students, setStudents] = useState([]);
@@ -102,6 +103,15 @@ export default function TeacherPage() {
           <p className="text-gray-600">No student data available.</p>
         </div>
       )}
+
+      <section className="mt-10 p-6 bg-white rounded-lg shadow text-center">
+        <h2 className="text-xl font-semibold mb-4 text-center">
+          Class Topic Analysis
+        </h2>
+        <div className="flex justify-center">
+          <TopicAnalyzer />
+        </div>
+      </section>
 
       <section className="mt-10 p-6 bg-white rounded-lg shadow">
         <h2 className="text-xl font-semibold mb-4">SM2 Algorithm Details</h2>
