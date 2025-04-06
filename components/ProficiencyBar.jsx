@@ -10,25 +10,25 @@ import React from "react";
  */
 export function ProficiencyBar({ easeFactor, className = "" }) {
   // Determine color based on ease factor
-  // Ease factor ranges from 1.3 to 5.0, but can be outside this range
+  // Ease factor ranges from 1.3 to 4.0
   const getColorClass = () => {
-    if (easeFactor < 1.3) return "bg-red-600"; // Very difficult - red
-    if (easeFactor < 2.04) return "bg-red-500"; // Red
-    if (easeFactor < 2.78) return "bg-orange-500"; // Orange
-    if (easeFactor < 3.52) return "bg-yellow-400"; // Yellow
-    if (easeFactor < 4.26) return "bg-green-300"; // Light green
-    return "bg-green-500"; // Green
+    if (easeFactor < 1.65) return "bg-red-500"; // Red
+    if (easeFactor < 2.0) return "bg-orange-500"; // Orange
+    if (easeFactor < 2.5) return "bg-yellow-400"; // Yellow
+    if (easeFactor < 3.0) return "bg-green-300"; // Light green
+    if (easeFactor < 3.5) return "bg-green-400"; // Medium green
+    return "bg-green-500"; // Vibrant green
   };
 
   // Calculate width percentage (0-100%) based on ease factor
-  // Normalize values between 1.3 and 5.0 to 10-100%
+  // Normalize values between 1.3 and 4.0 to 10-100%
   const getWidthPercentage = () => {
     // Handle values outside the normal range
     if (easeFactor < 1.3) return 10; // Minimum width for visibility
-    if (easeFactor > 5.0) return 100;
+    if (easeFactor > 4.0) return 100;
 
-    // Map the range 1.3-5.0 to 10-100%
-    return Math.round(((easeFactor - 1.3) / 3.7) * 90 + 10);
+    // Map the range 1.3-4.0 to 10-100%
+    return Math.round(((easeFactor - 1.3) / 2.7) * 90 + 10);
   };
 
   return (
@@ -74,12 +74,12 @@ export function TopicProficiencyCard({
  */
 export function ProficiencyLegend() {
   const legendItems = [
-    { color: "bg-red-600", label: "< 1.3" },
-    { color: "bg-red-500", label: "1.3 - 2.0" },
-    { color: "bg-orange-500", label: "2.0 - 2.8" },
-    { color: "bg-yellow-400", label: "2.8 - 3.5" },
-    { color: "bg-green-300", label: "3.5 - 4.3" },
-    { color: "bg-green-500", label: "> 4.3" },
+    { color: "bg-red-500", label: "1.3 - 1.65" },
+    { color: "bg-orange-500", label: "1.65 - 2.0" },
+    { color: "bg-yellow-400", label: "2.0 - 2.5" },
+    { color: "bg-green-300", label: "2.5 - 3.0" },
+    { color: "bg-green-400", label: "3.0 - 3.5" },
+    { color: "bg-green-500", label: "> 3.5" },
   ];
 
   return (
